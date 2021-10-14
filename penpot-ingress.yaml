@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: penpot-ingress
+  namespace: penpot
+  labels:
+    app: penpot
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+spec:
+  tls:
+  - hosts:
+    - penpotapp.yourdomain.com
+    secretName: cert-penpotapp.yourdomain.com
+  rules:
+  - host: penpotapp.yourdomain.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+                name: penpot-frontend
+                port:
+                  number: 80

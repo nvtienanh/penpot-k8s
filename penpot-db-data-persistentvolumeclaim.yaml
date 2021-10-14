@@ -1,0 +1,32 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: penpot-db-data-pv
+  namespace: penpot
+  labels:
+    app: penpot-db-data
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: your-nfs-ip
+    path: "/nfs/penpot/psql"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: penpot-db-data
+  name: penpot-db-data
+  namespace: penpot
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeName: penpot-db-data-pv
+status: {}

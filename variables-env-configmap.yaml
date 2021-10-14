@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: variables-env
+  namespace: penpot
+data:
+  # Should be set to the public domain where penpot is going to be served.
+  PENPOT_PUBLIC_URI: "https://penpotapp.yourdomain.com"
+
+  # Standard database connection parameters (only postgresql is supported):
+  PENPOT_DATABASE_URI: "postgresql://penpot-db/penpot"
+  PENPOT_DATABASE_HOST: "penpot-db"
+  PENPOT_DATABASE_NAME: "penpot"
+  PENPOT_DATABASE_USERNAME: "admin-penpot"
+  PENPOT_DATABASE_PASSWORD: "penpot-pa@@@"
+
+  # Redis is used for the websockets notifications.
+  PENPOT_REDIS_URI: "redis://penpot-redis/0"
+
+  # By default, files uploaded by users are stored in local filesystem. But it
+  # can be configured to store in AWS S3 or completely in de the database.
+  # Storing in the database makes the backups more easy but will make access to
+  # media less performant.
+  PENPOT_STORAGE_BACKEND: "fs"
+  PENPOT_STORAGE_FS_DIRECTORY: "/opt/data/assets"
+
+  # Telemetry. When enabled, a periodical process will send anonymous data about
+  # this instance. Telemetry data will enable us to learn on how the application
+  # is used, based on real scenarios. If you want to help us, please leave it
+  # enabled.
+  PENPOT_TELEMETRY_ENABLED: "false"
+
+  # Email sending configuration. By default, emails are printed in the console,
+  # but for production usage is recommended to setup a real SMTP provider. Emails
+  # are used to confirm user registrations.
+  PENPOT_SMTP_ENABLED: ""
+  PENPOT_SMTP_DEFAULT_FROM: ""
+  PENPOT_SMTP_DEFAULT_REPLY_TO: ""
+  PENPOT_SMTP_HOST: ""
+  PENPOT_SMTP_PORT: "25"
+  PENPOT_SMTP_USERNAME: ""
+  PENPOT_SMTP_PASSWORD: ""
+  PENPOT_SMTP_TLS: ""
+  PENPOT_SMTP_SSL: ""
+
+  # Enable or disable external user registration process.
+  PENPOT_REGISTRATION_ENABLED: "true"
+
+  # Comma separated list of allowed domains to register. Empty to allow all.
+  PENPOT_REGISTRATION_DOMAIN_WHITELIST: "yourdomain.com"
+
+  # Penpot comes with the facility to create quick demo users that are
+  # automatically deleted after some time. This settings enables or disables the
+  # creation of demo users.
+  PENPOT_ALLOW_DEMO_USERS: "false"
+
+  ## Authentication providers
+
+  # Google
+  # PENPOT_GOOGLE_CLIENT_ID=
+  # PENPOT_GOOGLE_CLIENT_SECRET=
+
+  # GitHub
+  # PENPOT_GITHUB_CLIENT_ID=
+  # PENPOT_GITHUB_CLIENT_SECRET=
+
+  # GitLab
+  # PENPOT_GITLAB_BASE_URI=https://gitlab.com
+  # PENPOT_GITLAB_CLIENT_ID=
+  # PENPOT_GITLAB_CLIENT_SECRET=
+
+  # LDAP
+  PENPOT_LDAP_HOST: ""
+  PENPOT_LDAP_PORT: ""
+  PENPOT_LDAP_SSL: ""
+  PENPOT_LDAP_STARTTLS: ""
+  PENPOT_LDAP_BASE_DN: ""
+  PENPOT_LDAP_BIND_DN: ""
+  PENPOT_LDAP_BIND_PASSWORD: ""
+  PENPOT_LDAP_ATTRS_USERNAME: ""
+  PENPOT_LDAP_ATTRS_EMAIL: ""
+  PENPOT_LDAP_ATTRS_FULLNAME: ""
+  PENPOT_LDAP_ATTRS_PHOTO: ""
+  PENPOT_LOGIN_WITH_LDAP: "true"

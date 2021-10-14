@@ -1,0 +1,33 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: penpot-assets-data-pv
+  namespace: penpot
+  labels:
+    app: penpot-assets-data
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: your-nfs-ip
+    path: "/nfs/penpot/assets-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: penpot-assets-data
+  name: penpot-assets-data
+  namespace: penpot
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: penpot-assets-data-pv
+status: {}

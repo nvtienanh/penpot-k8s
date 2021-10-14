@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: penpot-exporter  
+  name: penpot-exporter 
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-exporter  
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        app: penpot-exporter  
+      labels:
+        app: penpot-exporter  
+    spec:
+      containers:
+      - name: penpot-exporter 
+        image: penpotapp/exporter:latest
+        env:
+          - name: PENPOT_PUBLIC_URI
+            value: http://penpot-front   
+        imagePullPolicy: Always        
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: penpot-exporter
+  name: penpot-exporter
+  namespace: penpot
+spec:
+  ports:
+  - name: "6061"
+    port: 6061
+    protocol: TCP
+    targetPort: 6061
+  selector:
+    app: penpot-exporter

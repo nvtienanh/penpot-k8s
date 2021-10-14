@@ -1,0 +1,215 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: penpot-frontend  
+  name: penpot-frontend
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-frontend  
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: penpot-frontend  
+    spec:
+      containers:
+      - name: penpot-frontend
+        image: penpotapp/frontend:latest
+        imagePullPolicy: Always
+        env:
+          - name: PENPOT_DATABASE_URI
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_DATABASE_URI
+                name: variables-env
+          - name: PENPOT_DATABASE_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_DATABASE_PASSWORD
+                name: variables-env
+          - name: PENPOT_DATABASE_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_DATABASE_USERNAME
+                name: variables-env
+          - name: PENPOT_PUBLIC_URI
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_PUBLIC_URI
+                name: variables-env
+          - name: PENPOT_REDIS_URI
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_REDIS_URI
+                name: variables-env
+          - name: PENPOT_STORAGE_BACKEND
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_STORAGE_BACKEND
+                name: variables-env
+          - name: PENPOT_STORAGE_FS_DIRECTORY
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_STORAGE_FS_DIRECTORY
+                name: variables-env
+          - name: PENPOT_TELEMETRY_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_TELEMETRY_ENABLED
+                name: variables-env
+          - name: PENPOT_SMTP_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_ENABLED
+                name: variables-env
+          - name: PENPOT_SMTP_DEFAULT_FROM
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_DEFAULT_FROM
+                name: variables-env
+          - name: PENPOT_SMTP_DEFAULT_REPLY_TO
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_DEFAULT_REPLY_TO
+                name: variables-env
+          - name: PENPOT_REGISTRATION_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_REGISTRATION_ENABLED
+                name: variables-env
+          - name: PENPOT_ALLOW_DEMO_USERS
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_ALLOW_DEMO_USERS
+                name: variables-env
+          - name: PENPOT_LDAP_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_HOST
+                name: variables-env
+          - name: PENPOT_LDAP_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_PORT
+                name: variables-env
+          - name: PENPOT_LDAP_SSL
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_SSL
+                name: variables-env
+          - name: PENPOT_LDAP_SSL
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_SSL
+                name: variables-env
+          - name: PENPOT_LDAP_STARTTLS
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_STARTTLS
+                name: variables-env
+          - name: PENPOT_LDAP_BASE_DN
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_BASE_DN
+                name: variables-env
+          - name: PENPOT_LDAP_BIND_DN
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_BIND_DN
+                name: variables-env
+          - name: PENPOT_LDAP_BIND_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_BIND_PASSWORD
+                name: variables-env
+          - name: PENPOT_LDAP_ATTRS_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_ATTRS_USERNAME
+                name: variables-env
+          - name: PENPOT_LDAP_ATTRS_EMAIL
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_ATTRS_EMAIL
+                name: variables-env
+          - name: PENPOT_LDAP_ATTRS_FULLNAME
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_ATTRS_FULLNAME
+                name: variables-env
+          - name: PENPOT_LDAP_ATTRS_PHOTO
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LDAP_ATTRS_PHOTO
+                name: variables-env
+          - name: PENPOT_LOGIN_WITH_LDAP
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_LOGIN_WITH_LDAP
+                name: variables-env
+          - name: PENPOT_REGISTRATION_DOMAIN_WHITELIST
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_REGISTRATION_DOMAIN_WHITELIST
+                name: variables-env
+          - name: PENPOT_SMTP_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_HOST
+                name: variables-env
+          - name: PENPOT_SMTP_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_PORT
+                name: variables-env
+          - name: PENPOT_SMTP_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_USERNAME
+                name: variables-env
+          - name: PENPOT_SMTP_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_PASSWORD
+                name: variables-env
+          - name: PENPOT_SMTP_TLS
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_TLS
+                name: variables-env
+          - name: PENPOT_SMTP_SSL
+            valueFrom:
+              configMapKeyRef:
+                key: PENPOT_SMTP_SSL
+                name: variables-env
+        volumeMounts:
+        - mountPath: /opt/data
+          name: penpot-assets-data
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: penpot-assets-data
+        persistentVolumeClaim:
+          claimName: penpot-assets-data
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: penpot-frontend
+  name: penpot-frontend
+  namespace: penpot
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: penpot-frontend
